@@ -1,10 +1,14 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs: 
+      logLevel:
+        description: 'Log Level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
 
 jobs:
 
@@ -24,4 +28,4 @@ jobs:
       run: docker build . --file Dockerfile --tag node-stack/test:$(date +%s)
       
     - name: Docker Push
-      run: docker push ${{secrets.DOCKERHUB_USERNAME}}/node-stack
+      run: docker push ${{secrets.DOCKERHUB_USERNAME}}
